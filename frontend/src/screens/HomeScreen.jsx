@@ -4,7 +4,7 @@ import Loader from "../components/Loader";
 import { Button, Card } from "react-bootstrap";
 
 const HomeScreen = () => {
-  const { data, isLoading, isError } = useGetAllFilmsQuery();
+  const { data, isLoading } = useGetAllFilmsQuery();
   console.log("data", data);
   return (
     <div>
@@ -12,8 +12,6 @@ const HomeScreen = () => {
         <Loader />
       ) : (
         <React.Fragment>
-          <h1>Hero-Verse</h1>
-
           <h2>All movies here</h2>
           {data?.map((item) => (
             <div key={item?._id}>

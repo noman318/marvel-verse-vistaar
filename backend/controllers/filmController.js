@@ -3,9 +3,10 @@ import Film from "../models/film.model.js";
 const getAllMovies = async (req, res, next) => {
   try {
     const movies = await Film.find({}).select("-__v");
-    res.send(movies);
-    if (!movies) {
-      throw new Error("No Movies Found");
+    if (movies.length === 0) {
+      return res.status(404).send("No Movies Found");
+    } else {
+      return res.send(movies);
     }
   } catch (error) {
     console.log("error while getting all movies", error);
@@ -15,7 +16,7 @@ const getAllMovies = async (req, res, next) => {
 
 const getMoviesById = async (req, res, next) => {
   const { id } = req.params;
-  console.log("id", id);
+  // console.log("id", id);
   try {
     const movie = await Film.findById(id).select("-__v");
 
