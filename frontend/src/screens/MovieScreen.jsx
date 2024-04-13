@@ -1,0 +1,63 @@
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetSingleFilmQuery } from "../slices/filmApiSlice";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import { Button, Col, Image, ListGroup, Row } from "react-bootstrap";
+import { FaEdit, FaTrash } from "react-icons/fa";
+
+const MovieScreen = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  //   console.log("params", id);
+  const { data, isLoading, isError: error } = useGetSingleFilmQuery(id);
+  //   console.log("data", data);
+  return (
+    <React.Fragment>
+      {isLoading ? (
+        <div>
+          <Loader />
+        </div>
+      ) : error ? (
+        <Message variant={"danger"}>
+          {error?.data?.message ?? error?.error}
+        </Message>
+      ) : (
+        <Row>
+          <Col md={6}>
+            <Image src={data?.image} alt={data?.name} fluid />
+          </Col>
+          <Col md={3}>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <h2>{data?.name}</h2>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <h6>Description: {data?.description}</h6>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <h6>Genre: {data?.genre}</h6>
+              </ListGroup.Item>
+            </ListGroup>
+            <ListGroup
+              variant="flush"
+              className="d-flex flex-row justify-content-center align-items-center gap-2"
+            >
+              <Button
+                variant="secondary"
+                onClick={() => navigate(`/edit/${id}`)}
+              >
+                <FaEdit className="mx-3" />
+              </Button>
+              <Button variant="secondary">
+                <FaTrash color="black" className="mx-3" />
+              </Button>
+            </ListGroup>
+          </Col>
+        </Row>
+      )}
+    </React.Fragment>
+  );
+};
+
+export default MovieScreen;
