@@ -22,6 +22,18 @@ export const filmApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    searchDetails: builder.query({
+      query: ({ keyword, genre }) => ({
+        url: `${MOVIE_URL}/filter?keyword=${keyword}&genre=${genre}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getAllGenres: builder.query({
+      query: () => ({
+        url: `${MOVIE_URL}/genre`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     updateFilm: builder.mutation({
       query: ({ id, data }) => ({
         url: `${MOVIE_URL}/${id}`,
@@ -44,4 +56,6 @@ export const {
   useGetSingleFilmQuery,
   useUpdateFilmMutation,
   useDeleteMovieMutation,
+  useSearchDetailsQuery,
+  useGetAllGenresQuery,
 } = filmApiSlice;

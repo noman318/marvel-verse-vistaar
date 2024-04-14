@@ -5,12 +5,16 @@ import {
   getAllMovies,
   getMoviesById,
   updateMovie,
+  getSearchResults,
+  getAllGenre,
 } from "../controllers/filmController.js";
 import upload from "../middleware/Upload.js";
 
 const router = express.Router();
 
 router.route("/").get(getAllMovies).post(upload.single("image"), createMovies);
+router.route("/filter").get(getSearchResults);
+router.route("/genre").get(getAllGenre);
 router
   .route("/:id")
   .get(getMoviesById)

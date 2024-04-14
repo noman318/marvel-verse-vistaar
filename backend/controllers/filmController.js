@@ -14,6 +14,55 @@ const getAllMovies = async (req, res, next) => {
   }
 };
 
+const getAllGenre = async (req, res, next) => {
+  try {
+    const movies = await Film.distinct("genre");
+    if (movies.length === 0) {
+      return res.status(404).send("No Movies Found");
+    } else {
+      return res.send(movies);
+    }
+  } catch (error) {
+    console.log("error while getting all movies", error);
+    next(error);
+  }
+};
+
+const getSearchResults = async (req, res, next) => {
+  try {
+    // Get query parameters from the request
+    const { genre, releaseYear, keyword } = req.query;
+
+    // Construct the filter object based on the provided query parameters
+    const filter = {};
+    if (genre) {
+      filter.genre = genre;
+    }
+    if (releaseYear) {
+      filter.releaseYear = releaseYear;
+    }
+    if (keyword) {
+      // Perform a text search on the name and description fields using regex
+      filter.$or = [
+        { name: { $regex: `^${keyword}`, $options: "i" } },
+        { description: { $regex: `^${keyword}`, $options: "i" } },
+      ];
+    }
+
+    // Query the database with the constructed filter
+    const movies = await Film.find(filter).select("-__v");
+
+    if (movies.length === 0) {
+      return res.status(404).send("No Movies Found");
+    } else {
+      return res.send(movies);
+    }
+  } catch (error) {
+    console.log("error while getting all movies", error);
+    next(error);
+  }
+};
+
 const getMoviesById = async (req, res, next) => {
   const { id } = req.params;
   // console.log("id", id);
@@ -102,4 +151,12 @@ const deleteMovie = async (req, res, next) => {
   }
 };
 
-export { getAllMovies, getMoviesById, createMovies, updateMovie, deleteMovie };
+export {
+  getAllMovies,
+  getMoviesById,
+  createMovies,
+  updateMovie,
+  deleteMovie,
+  getSearchResults,
+  getAllGenre,
+};

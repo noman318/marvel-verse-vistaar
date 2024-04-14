@@ -22,3 +22,6 @@ main {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.flex-6 {
+  flex: 0.6;
+}
