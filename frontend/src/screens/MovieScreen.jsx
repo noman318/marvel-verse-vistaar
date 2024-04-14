@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Button, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const MovieScreen = () => {
   const { id } = useParams();
@@ -20,8 +21,10 @@ const MovieScreen = () => {
     // console.log("clicked");
     try {
       await deleteMovie(id);
-      alert("Deleted");
-      navigate("/");
+      toast.success("Deleted");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (error) {
       console.log("error", error);
     }
