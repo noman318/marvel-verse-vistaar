@@ -14,23 +14,26 @@ const MovieCard = ({ movie }) => {
           <Card.Img
             variant="top"
             src={movie?.image}
-            style={{ height: "300px", objectFit: "cover" }}
+            style={{ height: "400px", objectFit: "cover" }}
           />
           <Card.Body
             style={{
               color: "black",
-              height: "250px",
+              height: "70px",
               overflow: "hidden",
             }}
+            className="m-0 p-0"
           >
-            <Card.Title as={"div"} className="product_title">
-              Name: {movie?.name}
+            <Card.Title
+              as={"div"}
+              className="product_title m-0 text-align-left"
+            >
+              <strong>{movie?.name}</strong>
             </Card.Title>
-            <Card.Text className="line-clamp">
-              Description: {movie?.description}
+
+            <Card.Text className="text-secondary pl-3 m-0">
+              <strong>{movie?.releaseYear}</strong>
             </Card.Text>
-            <Card.Text>Year: {movie?.releaseYear}</Card.Text>
-            <Card.Text>Genre: {movie?.genre}</Card.Text>
           </Card.Body>
         </Card>
       </Link>
