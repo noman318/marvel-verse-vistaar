@@ -16,3 +16,9 @@ main {
 .mt-8 {
   margin-top: 5rem;
 }
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

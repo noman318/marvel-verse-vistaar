@@ -16,11 +16,19 @@ const MovieCard = ({ movie }) => {
             src={movie?.image}
             style={{ height: "300px", objectFit: "cover" }}
           />
-          <Card.Body style={{ color: "black" }}>
+          <Card.Body
+            style={{
+              color: "black",
+              height: "250px",
+              overflow: "hidden",
+            }}
+          >
             <Card.Title as={"div"} className="product_title">
-              Movie Name: {movie?.name}
+              Name: {movie?.name}
             </Card.Title>
-            <Card.Text>Description: {movie?.description}</Card.Text>
+            <Card.Text className="line-clamp">
+              Description: {movie?.description}
+            </Card.Text>
             <Card.Text>Year: {movie?.releaseYear}</Card.Text>
             <Card.Text>Genre: {movie?.genre}</Card.Text>
           </Card.Body>
