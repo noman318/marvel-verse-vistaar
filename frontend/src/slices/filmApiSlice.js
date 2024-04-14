@@ -29,6 +29,12 @@ export const filmApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    deleteMovie: builder.mutation({
+      query: (id) => ({
+        url: `${MOVIE_URL}/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -37,4 +43,5 @@ export const {
   useGetAllFilmsQuery,
   useGetSingleFilmQuery,
   useUpdateFilmMutation,
+  useDeleteMovieMutation,
 } = filmApiSlice;

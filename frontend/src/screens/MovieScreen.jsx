@@ -1,6 +1,9 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleFilmQuery } from "../slices/filmApiSlice";
+import {
+  useDeleteMovieMutation,
+  useGetSingleFilmQuery,
+} from "../slices/filmApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Button, Col, Image, ListGroup, Row } from "react-bootstrap";
@@ -12,6 +15,17 @@ const MovieScreen = () => {
   //   console.log("params", id);
   const { data, isLoading, isError: error } = useGetSingleFilmQuery(id);
   //   console.log("data", data);
+  const [deleteMovie, { isLoading: loading }] = useDeleteMovieMutation();
+  const handleDeleteMovie = async () => {
+    // console.log("clicked");
+    try {
+      await deleteMovie(id);
+      alert("Deleted");
+      navigate("/");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <React.Fragment>
       {isLoading ? (
@@ -25,7 +39,12 @@ const MovieScreen = () => {
       ) : (
         <Row>
           <Col md={6}>
-            <Image src={data?.image} alt={data?.name} fluid />
+            <Image
+              src={data?.image}
+              alt={data?.name}
+              fluid
+              className="rounded shadow"
+            />
           </Col>
           <Col md={3}>
             <ListGroup variant="flush">
@@ -49,8 +68,12 @@ const MovieScreen = () => {
               >
                 <FaEdit className="mx-3" />
               </Button>
-              <Button variant="secondary">
-                <FaTrash color="black" className="mx-3" />
+              <Button
+                variant="danger"
+                onClick={handleDeleteMovie}
+                disabled={loading}
+              >
+                <FaTrash color="white" className="mx-3" />
               </Button>
             </ListGroup>
           </Col>
