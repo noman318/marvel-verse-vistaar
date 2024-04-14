@@ -39,7 +39,7 @@ const createMovies = async (req, res, next) => {
   }
 
   const filePath = `/${req.file.destination}${req.file.filename}`;
-  console.log("filePath", filePath);
+  // console.log("filePath", filePath);
 
   try {
     const movie = new Film({
