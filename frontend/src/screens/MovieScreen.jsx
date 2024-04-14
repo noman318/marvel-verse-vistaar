@@ -41,7 +41,7 @@ const MovieScreen = () => {
         </Message>
       ) : (
         <Row>
-          <Col md={6}>
+          <Col md={7}>
             <Image
               src={data?.image}
               alt={data?.name}
@@ -49,7 +49,7 @@ const MovieScreen = () => {
               className="rounded shadow"
             />
           </Col>
-          <Col md={3}>
+          <Col md={5}>
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>{data?.name}</h2>
