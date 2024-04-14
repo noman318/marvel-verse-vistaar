@@ -32,11 +32,13 @@ const getMoviesById = async (req, res, next) => {
 
 const createMovies = async (req, res, next) => {
   const { name, description, genre, releaseYear } = req.body;
-  //   console.log("req.file.path", req.file.path);
+  // console.log("req.file.path", req.file.path);
+  const filePath = `/${req.file.destination}${req.file.filename}`;
+  // console.log("filePath", filePath);
   try {
     const movie = new Film({
       name,
-      image: req.file.path,
+      image: filePath,
       description,
       genre,
       releaseYear,
@@ -53,20 +55,20 @@ const createMovies = async (req, res, next) => {
 
 const updateMovie = async (req, res, next) => {
   const { id } = req.params;
-  const { name, description, genre, releaseYear } = req.body;
-
   try {
-    const updatedMovie = await Film.findByIdAndUpdate(
-      id,
-      {
-        name,
-        description,
-        genre,
-        releaseYear,
-        image: req.file.path,
-      },
-      { new: true }
-    );
+    const { name, description, genre, releaseYear } = req.body;
+
+    const updateObject = {};
+    if (name) updateObject.name = name;
+    if (description) updateObject.description = description;
+    if (genre) updateObject.genre = genre;
+    if (releaseYear) updateObject.releaseYear = releaseYear;
+    if (req.file)
+      updateObject.image = `/${req.file.destination}${req.file.filename}`;
+
+    const updatedMovie = await Film.findByIdAndUpdate(id, updateObject, {
+      new: true,
+    });
 
     if (updatedMovie) {
       res.status(200).send(updatedMovie);

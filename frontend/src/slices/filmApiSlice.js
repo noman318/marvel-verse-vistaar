@@ -14,10 +14,19 @@ export const filmApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${MOVIE_URL}`,
       }),
+      keepUnusedDataFor: 5,
     }),
     getSingleFilm: builder.query({
       query: (id) => ({
         url: `${MOVIE_URL}/${id}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    updateFilm: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${MOVIE_URL}/${id}`,
+        method: "PUT",
+        body: data,
       }),
     }),
   }),
@@ -27,4 +36,5 @@ export const {
   useCreateFilmMutation,
   useGetAllFilmsQuery,
   useGetSingleFilmQuery,
+  useUpdateFilmMutation,
 } = filmApiSlice;
