@@ -32,6 +32,7 @@ function App() {
                 <Route path="/" element={<HomeScreen />} />
                 <Route path="/view/:id" element={<MovieScreen />} />
                 <Route path="/edit/:id" element={<EditScreen />} />
+                <Route path="/create/" element={<EditScreen />} />
               </Routes>
             </Container>
           </main>

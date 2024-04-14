@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form, Image } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -11,6 +11,7 @@ import {
 
 const EditScreen = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   //   console.log("params", id);
   const {
     data,
@@ -92,6 +93,9 @@ const EditScreen = () => {
       }).unwrap();
       refetch();
       toast.success("Updated");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (error) {
       console.log("error", error);
       toast.error(error?.message ?? error?.data?.message);

@@ -32,9 +32,15 @@ const getMoviesById = async (req, res, next) => {
 
 const createMovies = async (req, res, next) => {
   const { name, description, genre, releaseYear } = req.body;
-  // console.log("req.file.path", req.file.path);
+
+  // Check if req.file is undefined or any of its properties are undefined
+  if (!req.file || !req.file.destination || !req.file.filename) {
+    return res.status(400).json({ error: "File information is missing" });
+  }
+
   const filePath = `/${req.file.destination}${req.file.filename}`;
-  // console.log("filePath", filePath);
+  console.log("filePath", filePath);
+
   try {
     const movie = new Film({
       name,
@@ -45,7 +51,6 @@ const createMovies = async (req, res, next) => {
     });
 
     const newMovie = await movie.save();
-    // console.log("newMovie", newMovie);
     res.status(201).send(newMovie);
   } catch (error) {
     console.log("error", error);
