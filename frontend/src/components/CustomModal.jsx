@@ -76,6 +76,7 @@ const CustomModal = ({ show, setShow, fetch }) => {
             <Form.Control
               type="text"
               name="name"
+              required
               value={formData.name}
               onChange={handleChange}
             />
@@ -85,6 +86,7 @@ const CustomModal = ({ show, setShow, fetch }) => {
             <Form.Control
               as="textarea"
               type="text"
+              required
               name="description"
               value={formData?.description}
               onChange={handleChange}
@@ -95,6 +97,7 @@ const CustomModal = ({ show, setShow, fetch }) => {
             <Form.Control
               type="text"
               name="genre"
+              required
               value={formData?.genre}
               onChange={handleChange}
             />
@@ -104,6 +107,7 @@ const CustomModal = ({ show, setShow, fetch }) => {
             <Form.Control
               type="text"
               name="releaseYear"
+              required
               value={formData?.releaseYear}
               onChange={handleChange}
             />
@@ -112,6 +116,7 @@ const CustomModal = ({ show, setShow, fetch }) => {
             <Form.Label>Image:</Form.Label>
             <Form.Control
               type="file"
+              required
               accept=".png, .jpg, .jpeg, .webp"
               onChange={handleFileChange}
             />

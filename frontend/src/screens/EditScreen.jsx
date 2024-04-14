@@ -123,6 +123,7 @@ const EditScreen = () => {
           <Form.Control
             type="text"
             name="name"
+            required
             value={formData.name}
             onChange={handleChange}
           />
@@ -132,6 +133,7 @@ const EditScreen = () => {
           <Form.Control
             type="text"
             name="description"
+            required
             value={formData?.description}
             onChange={handleChange}
           />
@@ -141,6 +143,7 @@ const EditScreen = () => {
           <Form.Control
             type="text"
             name="genre"
+            required
             value={formData?.genre}
             onChange={handleChange}
           />
@@ -150,6 +153,7 @@ const EditScreen = () => {
           <Form.Control
             type="text"
             name="releaseYear"
+            required
             value={formData?.releaseYear}
             onChange={handleChange}
           />
@@ -159,6 +163,7 @@ const EditScreen = () => {
           <Form.Control
             type="file"
             accept=".png, .jpg, .jpeg, .webp"
+            required
             onChange={handleFileChange}
           />
           {viewImage ? (
