@@ -20,7 +20,7 @@ const MovieScreen = () => {
   const handleDeleteMovie = async () => {
     // console.log("clicked");
     try {
-      await deleteMovie(id);
+      await deleteMovie(id).unwrap();
       toast.success("Deleted");
       setTimeout(() => {
         navigate("/");
