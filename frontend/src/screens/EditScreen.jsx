@@ -132,6 +132,7 @@ const EditScreen = () => {
           <Form.Label>Description:</Form.Label>
           <Form.Control
             type="text"
+            as="textarea"
             name="description"
             required
             value={formData?.description}
@@ -163,7 +164,6 @@ const EditScreen = () => {
           <Form.Control
             type="file"
             accept=".png, .jpg, .jpeg, .webp"
-            required
             onChange={handleFileChange}
           />
           {viewImage ? (
