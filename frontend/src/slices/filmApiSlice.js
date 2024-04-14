@@ -11,8 +11,17 @@ export const filmApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getAllFilms: builder.query({
-      query: () => ({
+      query: ({ pageNumber }) => ({
         url: `${MOVIE_URL}`,
+        params: {
+          pageNumber,
+        },
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getAllFilmForChart: builder.query({
+      query: () => ({
+        url: `${MOVIE_URL}/chart`,
       }),
       keepUnusedDataFor: 5,
     }),
@@ -23,8 +32,8 @@ export const filmApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     searchDetails: builder.query({
-      query: ({ keyword, genre }) => ({
-        url: `${MOVIE_URL}/filter?keyword=${keyword}&genre=${genre}`,
+      query: ({ keyword, genre, page }) => ({
+        url: `${MOVIE_URL}/filter?keyword=${keyword}&genre=${genre}&page=${page}`,
       }),
       keepUnusedDataFor: 5,
     }),
@@ -58,4 +67,5 @@ export const {
   useDeleteMovieMutation,
   useSearchDetailsQuery,
   useGetAllGenresQuery,
+  useGetAllFilmForChartQuery,
 } = filmApiSlice;

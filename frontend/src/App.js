@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import HomeScreen from "./screens/HomeScreen";
 import MovieScreen from "./screens/MovieScreen";
 import EditScreen from "./screens/EditScreen";
+import AnalyticsScreen from "./screens/AnalyticsScreen";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/view/:id" element={<MovieScreen />} />
                 <Route path="/edit/:id" element={<EditScreen />} />
                 <Route path="/create/" element={<EditScreen />} />
+                <Route path="/analysis/" element={<AnalyticsScreen />} />
               </Routes>
             </Container>
           </main>

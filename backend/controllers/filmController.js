@@ -1,12 +1,18 @@
 import Film from "../models/film.model.js";
 
 const getAllMovies = async (req, res, next) => {
+  const page = Number(req.query.pageNumber) || 1;
+  const pageSize = 4;
   try {
-    const movies = await Film.find({}).select("-__v");
+    const count = await Film.countDocuments();
+    const movies = await Film.find({})
+      .select("-__v")
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
     if (movies.length === 0) {
       return res.status(404).send("No Movies Found");
     } else {
-      return res.send(movies);
+      return res.json({ movies, page, pages: Math.ceil(count / pageSize) });
     }
   } catch (error) {
     console.log("error while getting all movies", error);
@@ -30,11 +36,15 @@ const getAllGenre = async (req, res, next) => {
 
 const getSearchResults = async (req, res, next) => {
   try {
-    // Get query parameters from the request
     const { genre, releaseYear, keyword } = req.query;
-
-    // Construct the filter object based on the provided query parameters
+    let { page } = req.query;
+    const pageSize = 4;
+    page = Number(page) || 1;
     const filter = {};
+
+    if (!genre && !releaseYear && !keyword) {
+      return res.status(200).send([]);
+    }
     if (genre) {
       filter.genre = genre;
     }
@@ -42,20 +52,23 @@ const getSearchResults = async (req, res, next) => {
       filter.releaseYear = releaseYear;
     }
     if (keyword) {
-      // Perform a text search on the name and description fields using regex
       filter.$or = [
         { name: { $regex: `^${keyword}`, $options: "i" } },
         { description: { $regex: `^${keyword}`, $options: "i" } },
       ];
     }
 
-    // Query the database with the constructed filter
-    const movies = await Film.find(filter).select("-__v");
+    const count = await Film.countDocuments(filter);
+
+    const movies = await Film.find(filter)
+      .select("-__v")
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
 
     if (movies.length === 0) {
       return res.status(404).send("No Movies Found");
     } else {
-      return res.send(movies);
+      return res.json({ movies, page, pages: Math.ceil(count / pageSize) });
     }
   } catch (error) {
     console.log("error while getting all movies", error);
@@ -63,6 +76,37 @@ const getSearchResults = async (req, res, next) => {
   }
 };
 
+// const getAllCharts = async (req, res, next) => {
+//   try {
+//     const movieData = await Film.aggregate([
+//       {
+//         $group: {
+//           _id: { year: "$releaseYear", genre: "$genre" },
+//           count: { $sum: 1 },
+//         },
+//       },
+//     ]);
+//     console.log("movieData", movieData);
+//     res.json(movieData);
+//   } catch (error) {
+//     console.log("error while getting all movies", error);
+//     next(error);
+//   }
+// };
+
+const getAllCharts = async (req, res, next) => {
+  try {
+    const movies = await Film.find({}).select("-__v");
+    if (movies.length === 0) {
+      return res.status(404).send("No Movies Found");
+    } else {
+      return res.json(movies);
+    }
+  } catch (error) {
+    console.log("error while getting all movies", error);
+    next(error);
+  }
+};
 const getMoviesById = async (req, res, next) => {
   const { id } = req.params;
   // console.log("id", id);
@@ -159,4 +203,5 @@ export {
   deleteMovie,
   getSearchResults,
   getAllGenre,
+  getAllCharts,
 };

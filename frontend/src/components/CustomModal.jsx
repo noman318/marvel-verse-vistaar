@@ -52,6 +52,14 @@ const CustomModal = ({ show, setShow, fetch }) => {
       toast.success("Movie Created");
       setShow(false);
       fetch();
+      setFormData({
+        name: "",
+        description: "",
+        genre: "",
+        releaseYear: "",
+        image: null,
+      });
+      setViewImage(null);
     } catch (error) {
       console.log("error", error);
       toast.error(error?.message ?? error?.data?.error);
