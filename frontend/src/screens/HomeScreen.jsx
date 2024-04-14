@@ -34,9 +34,9 @@ const HomeScreen = () => {
 
   const handleFileChange = (e) => {
     const file = e?.target?.files[0];
-    console.log("file", file);
+    // console.log("file", file);
     const imageUrl = URL.createObjectURL(file);
-    console.log("imageUrl", imageUrl);
+    // console.log("imageUrl", imageUrl);
     setViewImage(imageUrl);
     setFormData((prevData) => ({
       ...prevData,
@@ -54,18 +54,8 @@ const HomeScreen = () => {
     if (formData.image && formData.image instanceof File) {
       newMovieData.append("image", formData.image);
     } //
-    console.log("formDataInsideFunction", formData);
-    // try {
-    //   await updateFilm({
-    //     id,
-    //     data: formData,
-    //   }).unwrap();
-    // } catch (error) {
-    //   console.log("error", error);
-    //   alert(error);
-    // }
+    // console.log("formDataInsideFunction", formData);
 
-    console.log("formDataInsideFunction", newMovieData);
     try {
       await createMovie(newMovieData).unwrap();
       toast.success("Movie Created");
